@@ -1,0 +1,19 @@
+.contact-list {
+    margin: 0;
+    padding: 0;
+
+    // background: teal;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    
+    // max-height: 82.5vh;
+    // overflow:auto;
+}
+
+@media (min-width:480px) {
+    .contact-list {
+        max-width:18em;
+    }
+    
+}

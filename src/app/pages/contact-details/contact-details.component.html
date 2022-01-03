@@ -1,0 +1,8 @@
+<section>
+    <button (click)="onBack()">⬅ Back</button>
+    <a [routerLink]="['../edit', contact._id]" class="btn btn-edit">Edit</a>
+    <img src="https://robohash.org/{{contact._id}}?set=set5" alt="">
+    <p>{{ contact.name }}</p>
+    <p>{{ contact.phone }}</p>
+    <p>{{ contact.email }}</p>
+</section>

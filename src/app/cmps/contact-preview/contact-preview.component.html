@@ -1,0 +1,15 @@
+<li [routerLink]="[contact._id]" class="contact-preview">
+
+    <img src="https://robohash.org/{{contact._id}}?set=set5" alt="">
+
+    <div>
+        <p>{{ contact.name }}</p>
+        <p class="phone">{{ contact.phone }}</p>
+    </div>
+
+    <div (click)="$event.stopPropagation()" class="actions">
+        <a [routerLink]="['edit', contact._id]" class="btn btn-edit">Edit</a>
+        <button (click)="onRemove.emit(contact._id)" class="btn btn-remove">✖</button>
+    </div>
+
+</li>

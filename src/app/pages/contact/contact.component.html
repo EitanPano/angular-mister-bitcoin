@@ -1,0 +1,6 @@
+<section>
+    <router-outlet></router-outlet>
+    <a routerLink="edit">ADD</a>
+    <contact-list (onRemove)="removeContact($event)" [contacts]="contacts$|async"></contact-list>
+    <!-- <pre>Contacts:{{contacts|json}}</pre> -->
+</section>
