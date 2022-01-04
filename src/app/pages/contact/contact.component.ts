@@ -1,37 +1,37 @@
-import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
-import { Router } from '@angular/router';
-import { Observable, Subscription } from 'rxjs';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+
+import { Observable } from 'rxjs';
 import { Contact } from 'src/app/models/contact.model';
-import { ContactService } from 'src/app/services/contact.service';
+import { FilterBy } from 'src/app/models/filter-by.model';
+import { ContactService } from 'src/app/services/contact/contact.service';
 
 @Component({
   selector: 'contact',
   templateUrl: './contact.component.html',
   styleUrls: ['./contact.component.scss'],
 })
-export class ContactComponent implements OnInit, OnDestroy {
-  contacts: Contact[];
+export class ContactComponent implements OnInit {
   contacts$: Observable<Contact[]>;
-  subscription: Subscription;
+  filterBy: FilterBy = { term: '' }
+
 
   @Output() navigate = new EventEmitter<string>()
 
-  constructor(private contactService: ContactService, private router: Router) {}
+  constructor(private contactService: ContactService) {}
 
   ngOnInit(): void {
     this.contactService.loadContacts();
     this.contacts$ = this.contactService.contacts$;
-    
-    // this.subscription = this.contactService.contacts$.subscribe((contacts) => {
-    //   this.contacts = contacts;
-    // });
   }
 
-  ngOnDestroy(): void {}
+  onSetFilter(filterBy): void {
+    this.filterBy = filterBy
+    this.contactService.loadContacts(this.filterBy);
+  }
 
-  removeContact(contactId) {
+  onRemove(contactId) {
     console.log(contactId);
     this.contactService.remove(contactId)
-    
+    this.filterBy.term = ''
   }
 }

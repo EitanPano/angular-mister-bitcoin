@@ -1,0 +1,6 @@
+<form #form="ngForm" (ngSubmit)="onSubmit(form)">
+    <p>Transfer coins to {{ contact.name }} :</p>
+    <label for="amount">Amount :</label>
+    <input ngModel #amount name="amount" type="number">
+    <button>Transfer</button>
+</form>

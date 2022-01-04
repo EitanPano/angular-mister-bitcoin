@@ -5,4 +5,7 @@
     <p>{{ contact.name }}</p>
     <p>{{ contact.phone }}</p>
     <p>{{ contact.email }}</p>
+
+    <transfer-fund [title]="'Your Moves :'" [contact]="contact" (onTransfer)="onTransfer($event)"></transfer-fund>
+    <move-list [contact]="contact"></move-list>
 </section>

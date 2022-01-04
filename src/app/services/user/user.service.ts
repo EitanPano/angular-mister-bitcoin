@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject, of } from 'rxjs';
-import { User } from '../models/user.model';
-import { storageService } from './async-storage.service';
+import { User } from '../../models/user.model';
+import { UtilsService } from '../utils/utils.service';
+import { AsyncStorageService } from '../async-storage/async-storage.service';
 
 const USERS = [
   {
@@ -39,7 +40,7 @@ export class UserService {
   private _users$ = new BehaviorSubject<User[]>([]);
   public users$ = this._users$.asObservable();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private utilsService: UtilsService, private storageService: AsyncStorageService) {}
 
   public loadUsers(filterBy = null) {
     let users: User[] = this._usersDB;
@@ -81,22 +82,26 @@ export class UserService {
     );
     // change the observable data in the service - let all the subscribers know
     this._users$.next(this._sort(this._usersDB));
+    return user
   }
 
-  private _add(user: User) {
+  private async _add(user: User) {
     //mock the server work
+    user = await this.storageService.post(this.STORAGE_KEY, user)
+    
     //declare interface newUser
     const newUser = new User(
       user.name,
       user.coins = 100,
-    );
-    newUser.setId();
+      user.moves = [],
+      user._id
+      );
 
-
-    
+      console.log('after new user interface', user);
+      
     this._usersDB.push(newUser);
     this._users$.next(this._sort(this._usersDB));
-    return storageService.post(this.STORAGE_KEY, newUser)
+    return newUser
   }
 
   private _sort(users: User[]): User[] {

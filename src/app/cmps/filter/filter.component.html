@@ -1,0 +1,4 @@
+<form action="">
+    <label for="filter"></label>
+    <input [(ngModel)]="filterBy.term" (ngModelChange)="onSetFilter.emit(filterBy)" name="term" placeholder="Search Contact" type="text">
+</form>

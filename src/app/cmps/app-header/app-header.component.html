@@ -9,7 +9,10 @@
             <a routerLink="" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
             <a routerLink="contact" routerLinkActive="active">Contacts</a>
             <a routerLink="statistic" routerLinkActive="active">Statistic</a>
-            <a routerLink="auth" routerLinkActive="active">Sign In</a>
+            <a *ngIf="loggedInUser; else signIn" (click)="onLogout.emit()" routerLink="auth" routerLinkActive="active">Logout</a>
+            <ng-template #signIn>
+                <a routerLink="auth" routerLinkActive="active">Sign In</a>
+            </ng-template>
         </div>
     </nav>
 </header>

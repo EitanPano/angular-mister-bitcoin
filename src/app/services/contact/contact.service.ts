@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, BehaviorSubject, of, delay } from 'rxjs';
-import { Contact } from '../models/contact.model';
+import { Observable, BehaviorSubject, of, filter } from 'rxjs';
+import { Contact } from '../../models/contact.model';
+import { UtilsService } from '../utils/utils.service';
+import { FilterBy } from 'src/app/models/filter-by.model';
 
 const CONTACTS = [
   {
@@ -125,13 +127,14 @@ const CONTACTS = [
   providedIn: 'root',
 })
 export class ContactService {
+  private STORAGE_KEY = 'contacts'
   //mock the server
   private _contactsDB: Contact[] = CONTACTS;
 
   private _contacts$ = new BehaviorSubject<Contact[]>([]);
   public contacts$ = this._contacts$.asObservable();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private utilsService: UtilsService) {}
 
   public loadContacts(filterBy = null) {
     let contacts: Contact[] = this._contactsDB;
@@ -147,7 +150,7 @@ export class ContactService {
 
     //return an observable
     return contact
-      ? of(contact)
+      ? of({...contact})
       // : of(this.getEmptyContact())
       : Observable.caller(`Contact id ${id} not found!`);
   }
@@ -167,7 +170,7 @@ export class ContactService {
   }
 
   public getEmptyContact() {
-    return { name: '',email: '',phone: '' }
+    return { name: '',email: '',phone: '' } as Contact
   }
 
   private _update(contact: Contact) {
@@ -186,13 +189,21 @@ export class ContactService {
       contact.name,
       contact.phone,
       contact.email,
+      contact._id = this.utilsService.makeId()
     );
-    newContact.setId();
-
-    console.log(newContact);
-    
     this._contactsDB.push(newContact);
     this._contacts$.next(this._sort(this._contactsDB));
+  }
+
+  private _filter(contacts: Contact[], term: string) {
+    term = term.toLocaleLowerCase();
+    return contacts.filter((contact) => {
+      return (
+        contact.name.toLocaleLowerCase().includes(term) ||
+        contact.phone.toLocaleLowerCase().includes(term) ||
+        contact.email.toLocaleLowerCase().includes(term)
+      );
+    });
   }
 
   private _sort(contacts: Contact[]): Contact[] {
@@ -205,17 +216,6 @@ export class ContactService {
       }
 
       return 0;
-    });
-  }
-
-  private _filter(contacts: Contact[], term: string) {
-    term = term.toLocaleLowerCase();
-    return contacts.filter((contact) => {
-      return (
-        contact.name.toLocaleLowerCase().includes(term) ||
-        contact.phone.toLocaleLowerCase().includes(term) ||
-        contact.email.toLocaleLowerCase().includes(term)
-      );
     });
   }
 }

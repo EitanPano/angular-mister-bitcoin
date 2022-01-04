@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { ContactResolverService } from './services/contact-resolver.service';
+import { ContactResolveService } from './services/contact/contact-resolve.service';
 
 import { ContactDetailsComponent } from './pages/contact-details/contact-details.component';
 import { ContactEditComponent } from './pages/contact-edit/contact-edit.component';
@@ -9,32 +9,34 @@ import { ContactComponent } from './pages/contact/contact.component';
 import { HomeComponent } from './pages/home/home.component';
 import { StatisticComponent } from './pages/statistic/statistic.component';
 import { AuthComponent } from './pages/auth/auth.component';
+import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
   {
     path: 'contact',
     component: ContactComponent,
+    canActivate: [AuthGuard],
     children: [
       {
         path: 'edit/:id',
         component: ContactEditComponent,
-        resolve: { contact: ContactResolverService },
+        resolve: { contact: ContactResolveService },
       },
       {
         path: 'edit',
         component: ContactEditComponent,
-        resolve: { contact: ContactResolverService },
+        resolve: { contact: ContactResolveService },
       },
       {
         path: ':id',
         component: ContactDetailsComponent,
-        resolve: { contact: ContactResolverService },
+        resolve: { contact: ContactResolveService },
       },
     ],
   },
-  { path: 'statistic', component: StatisticComponent },
+  { path: 'statistic', component: StatisticComponent, canActivate: [AuthGuard] },
   { path: 'auth', component: AuthComponent },
-  { path: '', component: HomeComponent },
+  { path: '', component: HomeComponent, canActivate: [AuthGuard] },
 ];
 
 @NgModule({
