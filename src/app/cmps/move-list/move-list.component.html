@@ -1,1 +1,4 @@
-<p>move-list works!</p>
+<ul>
+    <h3>{{title}}</h3>
+    <move-preview *ngFor="let move of moves" [move]="move|json"></move-preview>
+</ul>

@@ -1,20 +1,20 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Contact } from 'src/app/models/contact.model';
+import { Move } from 'src/app/models/move.model';
 
 @Component({
   selector: 'move-list',
   templateUrl: './move-list.component.html',
-  styleUrls: ['./move-list.component.scss']
+  styleUrls: ['./move-list.component.scss'],
 })
 export class MoveListComponent implements OnInit {
 
-  @Input() contact:Contact
+  @Input() title: string;
+  @Input() moves: Move[];
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit(): void {
-    console.log(this.contact);
-    
+    console.log('My moves', this.moves);
   }
-
 }

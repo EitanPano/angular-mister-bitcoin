@@ -2,4 +2,6 @@
     <p>Hello {{loggedInUser.name}}</p>
     <p><span>💼</span> Coins: {{loggedInUser.coins}}</p>
     <p><span>⛔</span> BTC: 0.019</p>
+
+    <move-list [title]="'Your Latest Moves'" [moves]="loggedInUser.moves|slice:0:3"></move-list>
 </section>

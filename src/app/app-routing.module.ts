@@ -34,7 +34,11 @@ const routes: Routes = [
       },
     ],
   },
-  { path: 'statistic', component: StatisticComponent, canActivate: [AuthGuard] },
+  {
+    path: 'statistic',
+    component: StatisticComponent,
+    canActivate: [AuthGuard],
+  },
   { path: 'auth', component: AuthComponent },
   { path: '', component: HomeComponent, canActivate: [AuthGuard] },
 ];

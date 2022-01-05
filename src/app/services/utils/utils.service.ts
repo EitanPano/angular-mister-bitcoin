@@ -25,4 +25,10 @@ export class UtilsService {
     var str = localStorage[key] || 'null';
     return JSON.parse(str);
   }
+
+  public sessionStore(key: string, any: any): void {
+    sessionStorage.setItem(key, JSON.stringify(any));
+    return any;
+  }
+
 }

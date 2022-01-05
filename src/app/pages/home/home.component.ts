@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/models/user.model';
-import { AuthService } from 'src/app/services/auth/auth.service';
+import { UserService } from 'src/app/services/user/user.service';
 
 @Component({
   selector: 'home',
@@ -10,9 +10,9 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 export class HomeComponent implements OnInit {
   loggedInUser: User;
 
-  constructor(private authService: AuthService) {}
+  constructor(private userService: UserService) {}
 
   ngOnInit(): void {
-    this.authService.loggedInUser$.subscribe(user => this.loggedInUser = user);
+    this.userService.loggedInUser$.subscribe(user => this.loggedInUser = user);
   }
 }

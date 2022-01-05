@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { User } from './models/user.model';
 import { AuthService } from './services/auth/auth.service';
+import { UserService } from './services/user/user.service';
 
 @Component({
   selector: 'app-root',
@@ -13,11 +14,11 @@ export class AppComponent implements OnInit{
   loggedInUser: User;
   subscription: Subscription
   
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private userService: UserService) {}
 
   ngOnInit(): void {
-      this.authService.getLoggedInUser()
-      this.subscription = this.authService.loggedInUser$.subscribe(user => {
+      this.userService.getLoggedInUser()
+      this.subscription = this.userService.loggedInUser$.subscribe(user => {
         this.loggedInUser = user
       })
   }

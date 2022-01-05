@@ -8,26 +8,17 @@ import { UserService } from '../user/user.service';
   providedIn: 'root',
 })
 export class AuthService {
-  private STORAGE_KEY = 'user';
+  private STORAGE_KEY = 'users';
   private SESSION_KEY = 'loggedInUser';
 
-  private _loggedInUser$ = new BehaviorSubject<User>(null)
-  public loggedInUser$ = this._loggedInUser$.asObservable()
-
   constructor(private userService: UserService, private router: Router) {}
-
-  public getLoggedInUser() {
-    const loggedInUser = JSON.parse(sessionStorage.getItem(this.SESSION_KEY));
-    this._loggedInUser$.next(loggedInUser)
-    return of({...this.loggedInUser$})
-  }
 
   async signup(userCred) {
     try {
       // const user = await httpService.post(`${AUTH_URL}signup`, userCred);
       const user = await this.userService.save(userCred);
       this.router.navigateByUrl('');
-      this._loggedInUser$.next(user)
+      // this._loggedInUser$.next(user)
       return this._saveLocalUser(user);
     } catch (e) {
       throw e;
@@ -46,7 +37,7 @@ export class AuthService {
   async logout() {
     try {
       // const user = await httpService.post(`${AUTH_URL}logout`, userCred);
-      this._loggedInUser$.next(null)
+      // this._loggedInUser$.next(null)
       sessionStorage.removeItem(this.SESSION_KEY);
     } catch (e) {
       throw e;

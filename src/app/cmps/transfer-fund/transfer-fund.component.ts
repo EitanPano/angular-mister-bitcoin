@@ -5,18 +5,18 @@ import { Contact } from 'src/app/models/contact.model';
 @Component({
   selector: 'transfer-fund',
   templateUrl: './transfer-fund.component.html',
-  styleUrls: ['./transfer-fund.component.scss']
+  styleUrls: ['./transfer-fund.component.scss'],
 })
 export class TransferFundComponent {
 
-  @Input() title:string
-  @Input() contact:Contact
-  @Output() onTransfer = new EventEmitter<number>()
+  @Input() title: string;
+  @Input() contact: Contact;
+  @Output() onTransfer = new EventEmitter<number>();
 
-  constructor() { }
+  constructor() {}
 
-  onSubmit(form:NgForm) {
-    this.onTransfer.emit(form.value)
+  onSubmit(form: NgForm) {
+    const amount = form.value.amount
+    this.onTransfer.emit( amount );
   }
-
 }

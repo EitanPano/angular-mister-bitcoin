@@ -1,1 +1,12 @@
-<p>statistic works!</p>
+<div *ngIf="!newMarketData && !marketTableTitle && !newTransactionsData && !transactionsTableTitle;else chartData"
+    class="flex loading-container">
+    <loader></loader>
+</div>
+<ng-template #chartData>
+
+    <div *ngIf="newMarketData && newTransactionsData && transactionsTableTitle" class="chart-container">
+        <chart [marketTableTitle]="marketTableTitle" [marketData]="newMarketData"
+            [transactionsTableTitle]="transactionsTableTitle" [transactionsData]="newTransactionsData">
+        </chart>
+    </div>
+</ng-template>
