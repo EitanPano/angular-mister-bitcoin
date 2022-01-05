@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Contact } from 'src/app/models/contact.model';
 import { Move } from 'src/app/models/move.model';
 
 @Component({
@@ -7,14 +6,11 @@ import { Move } from 'src/app/models/move.model';
   templateUrl: './move-list.component.html',
   styleUrls: ['./move-list.component.scss'],
 })
-export class MoveListComponent implements OnInit {
+export class MoveListComponent {
 
   @Input() title: string;
   @Input() moves: Move[];
 
   constructor() {}
 
-  ngOnInit(): void {
-    console.log('My moves', this.moves);
-  }
 }

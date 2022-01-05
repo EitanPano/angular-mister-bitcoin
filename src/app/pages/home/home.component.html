@@ -1,7 +1,11 @@
-<section>
-    <p>Hello {{loggedInUser.name}}</p>
-    <p><span>💼</span> Coins: {{loggedInUser.coins}}</p>
-    <p><span>⛔</span> BTC: 0.019</p>
+<section class="home">
+    <p class="greet">Hello {{loggedInUser.name}}</p>
 
-    <move-list [title]="'Your Latest Moves'" [moves]="loggedInUser.moves|slice:0:3"></move-list>
+    <div class="current-balance">
+        <p>Current Balance</p>
+        <p><span>BTC :</span>  ₿ {{loggedInUser.coins}}</p>
+        <p><span>USD :</span>  $ {{rate * loggedInUser.coins}}</p>
+    </div>
+
+    <move-list [title]="'Latest Moves'" [moves]="loggedInUser.moves|slice:0:3"></move-list>
 </section>

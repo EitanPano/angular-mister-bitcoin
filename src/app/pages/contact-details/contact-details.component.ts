@@ -31,7 +31,6 @@ export class ContactDetailsComponent implements OnInit {
   }
 
   async onTransfer(amount) {
-    console.log(this.contact, amount);
     try {
       await this.userService.transferFund(this.contact, amount);
     }

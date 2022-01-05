@@ -15,11 +15,7 @@ export class ContactEditComponent implements OnInit {
   constructor(private contactService: ContactService, private router: Router, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
-    console.log(this.route.data);
-    
     this.route.data.subscribe(({ contact }) => {
-      console.log(contact);
-      
       this.contact = contact
     })
   }

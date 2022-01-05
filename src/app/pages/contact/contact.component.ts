@@ -30,7 +30,6 @@ export class ContactComponent implements OnInit {
   }
 
   onRemove(contactId) {
-    console.log(contactId);
     this.contactService.remove(contactId)
     this.filterBy.term = ''
   }

@@ -82,15 +82,12 @@ export class UserService {
     if (user.coins - amount < 0) return null;
 
     user.coins -= amount;
-    console.log(amount);
-    
     const newMove = new Move(contact._id, contact.name, Date.now(), amount)
     user.moves.unshift( newMove )
+    
     const updatedUser = await this.storageService.put(this.STORAGE_KEY, user);
-
     this.utilsService.sessionStore(this.SESSION_KEY, updatedUser)
     this._loggedInUser$.next(updatedUser);
-
   }
 
   public remove(id: string) {
